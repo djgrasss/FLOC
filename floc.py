@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
+import argparse
 from urlparse import parse_qs, urlparse
 
 AUTHOR = '@hyprwired'
-VERSION = '1.0'
+VERSION = '1.0.1'
 
 
 class FLOC:
@@ -127,7 +128,19 @@ def print_tool_info():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", help="File containing Facebook OAuth Login URL")
+    parser.add_argument("-u", "--url", help="Facebook OAuth Login URL")
+    args = parser.parse_args()
     print_tool_info()
-    raw_url = raw_input("[>] Please enter a Facebook OAuth Login URL: ")
+    if args.file:
+        print("Reading URL from file: %s" % args.file)
+        f = open(args.file, 'r')
+        raw_url = f.readline()
+        f.close()
+    elif args.url:
+        raw_url = args.url
+    else:
+        raw_url = raw_input("[>] Please enter a Facebook OAuth Login URL: ")
     floc_object = FLOC()
     floc_object.check_vulnerable(raw_url)
