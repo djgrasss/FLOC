@@ -4,7 +4,7 @@ import argparse
 from urlparse import parse_qs, urlparse
 
 AUTHOR = '@hyprwired'
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 
 class FLOC:
@@ -127,7 +127,7 @@ def print_tool_info():
     print(("#" * 61) + "\n")
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", help="File containing Facebook OAuth Login URL")
     parser.add_argument("-u", "--url", help="Facebook OAuth Login URL")
@@ -144,3 +144,7 @@ if __name__ == '__main__':
         raw_url = raw_input("[>] Please enter a Facebook OAuth Login URL: ")
     floc_object = FLOC()
     floc_object.check_vulnerable(raw_url)
+
+
+if __name__ == '__main__':
+    main()
