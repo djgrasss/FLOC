@@ -1,10 +1,15 @@
 #!/usr/bin/python
 
+""" Tool to determine if a web application's implementation of the Facebook
+    OAuth Login flow is vulnerable to CSRF.
+
+    Refer to: https://developers.facebook.com/docs/reference/dialogs/oauth/"""
+
 import argparse
 from urlparse import parse_qs, urlparse
 
 __author__ = '@hyprwired'
-__version__ = '1.0.4'
+__version__ = '1.0.5'
 
 
 class FLOC:
@@ -20,8 +25,10 @@ class FLOC:
         self.redirect_uri = None
         self.redirect_uri_parsed = None
         self.client_id = None
+        self.display = None
         self.scope = None
         self.state = None
+        self.response_type = None
 
     def parse_raw_url(self, raw_url):
         print("[*] Parsing URL...")
@@ -60,6 +67,10 @@ class FLOC:
         self.redirect_uri = parsed_qs['redirect_uri'][0]
         self.client_id = parsed_qs['client_id'][0]
         try:
+            self.display = parsed_qs['display'][0]
+        except KeyError:
+            pass
+        try:
             self.scope = parsed_qs['scope'][0]
         except KeyError:
             pass
@@ -67,14 +78,20 @@ class FLOC:
             self.state = parsed_qs['state'][0]
         except KeyError:
             pass
+        try:
+            self.response_type = parsed_qs['response_type'][0]
+        except KeyError:
+            self.response_type = 'code'  # Facebook defaults to code
 
         print("\n" + ("=" * 21))
         print("Information from URL:")
         print("=" * 21)
-        print("   'client_id': %s" % self.client_id)
-        print("'redirect_uri': %s" % self.redirect_uri)
-        print("       'scope': %s" % self.scope)
-        print("       'state': %s" % self.state)
+        print("    'client_id': %s" % self.client_id)
+        print(" 'redirect_uri': %s" % self.redirect_uri)
+        print("      'display': %s" % self.display)
+        print("        'scope': %s" % self.scope)
+        print("        'state': %s" % self.state)
+        print("'response_type': %s" % self.response_type)
         print("=" * 21)
         print("")
 
@@ -114,7 +131,7 @@ class FLOC:
                     return False
 
             print("[*] URL being examined is for an authenticated user.")
-            self.examine_url()
+            return self.examine_url()
 
         else:
             print("[-] ERROR: URL is not for Facebook OAuth Login.")
