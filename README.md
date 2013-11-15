@@ -31,16 +31,21 @@ https://www.facebook.com/dialog/oauth?client_id=145044622175352&scope=email&redi
 
 3. There are currently 3 ways to get FLOC to examine the URL:
   1. Run FLOC from a shell like so, and enter the URL when prompted:
+
 ```
 python floc.py
+```
+```
 [>] Please enter a Facebook OAuth Login URL:
 ```
  2. Enter the URL into a file and have FLOC read it using the -f argument (this
     can be useful on OSX where the terminal is limited to 1023 characters):
+
 ```
 python floc.py -f url.txt
 ```
   3. Pass FLOC the URL directly as an argument using the -u argument, e.g:
+
 ```
 python floc.py -u "<facebook_oauth_login_url>"
 ```
