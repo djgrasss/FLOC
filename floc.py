@@ -134,7 +134,7 @@ def main():
     args = parser.parse_args()
     print_tool_info()
     if args.file:
-        print("Reading URL from file: %s" % args.file)
+        print("[*] Reading URL from file: %s" % args.file)
         f = open(args.file, 'r')
         raw_url = f.readline()
         f.close()
