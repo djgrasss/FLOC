@@ -3,8 +3,8 @@
 import argparse
 from urlparse import parse_qs, urlparse
 
-AUTHOR = '@hyprwired'
-VERSION = '1.0.2'
+__author__ = '@hyprwired'
+__version__ = '1.0.4'
 
 
 class FLOC:
@@ -122,8 +122,8 @@ class FLOC:
 
 def print_tool_info():
     print("\n" + ("#" * 61))
-    print("FLOC (Facebook Login OAuth CSRF detection tool) by %s" % AUTHOR)
-    print("Version: %s" % VERSION)
+    print("FLOC (Facebook Login OAuth CSRF detection tool) by %s" % __author__)
+    print("Version: %s" % __version__)
     print(("#" * 61) + "\n")
 
 
